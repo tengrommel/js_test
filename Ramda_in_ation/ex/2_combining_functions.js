@@ -72,3 +72,15 @@ Ramda 提供了 pipe 函数：接受一系列函数，并返回一个新函数�
 const operate_ramda = R.pipe(multiply, addOne, square)
 result_ramda = operate_ramda(3, 4)
 console.log(result_ramda)
+
+// compose
+// 另一种编写原始operate函数的方式是内联所有暂时变量
+const operat_new = (x, y) => square(addOne(multiply(x, y)))
+console.log(operat_new(3, 4))
+    // 这样更紧凑，但也更不便于阅读。然而这种形式可以使用 Ramda 的 compose 函数进行重写。
+const operate_new_ramda = R.compose(
+    square,
+    addOne,
+    multiply
+)
+console.log(operate_new_ramda(3, 4))
