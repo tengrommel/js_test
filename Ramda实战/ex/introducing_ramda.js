@@ -28,7 +28,7 @@ IMMUTABILITY
     但是，为了保持和本系列其他文章一致，本文将使用 Ramda 版本的函数。
 */
 
-// foreach
+//  R.forEach
 // 不必写显式的循环，而是用forEach替代循环。
 // old
 let myArray = [1, 2, "teng"];
