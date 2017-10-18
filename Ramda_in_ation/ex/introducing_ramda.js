@@ -39,3 +39,15 @@ for (const value of myArray) {
 console.log(typeof(R.forEach));
 // with
 R.forEach(value => console.log(value), myArray);
+/*
+forEach是这些函数中最不函数式一个，forEach没有返回值，所以只能用在有副作用的函数中调用中。
+*/
+
+// map
+
+/*
+map 也是将函数作用于数组的每个元素。
+但与 forEach 不同的是，map 将函数的每个返回值组成一个新数组，并将其返回。
+*/
+
+console.log(R.map(x => x * 2, [1, 2, 3]));
