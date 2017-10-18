@@ -136,3 +136,10 @@ const titlesForYear_filp = (books, year) => {
 */
 const threeArgs = R.curry((a,b,c)=>{})
 const middleArgumentLater = threeArgs('value for a', R._, 'value for c')
+
+// 也可以使用 "占位符" 代替 flip：
+const publishedInYear_ = R.curry((book, year) => book.year==year)
+const titlesForYear_ = (books, year) => {
+    const selected = R.filter(publishedInYear_(_, year), books)
+    return R.map(book => book.title, selected)
+}
