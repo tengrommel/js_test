@@ -84,3 +84,8 @@ const operate_new_ramda = R.compose(
     multiply
 )
 console.log(operate_new_ramda(3, 4))
+
+/*
+这与上面的 pipe 几乎一样，除了函数的顺序是相反的。实际上，Ramda 中的 compose 函数的内部是用 pipe 实现的。
+我一直这样思考 compose 的工作方式：compose(f, g)(value) 等价于 f(g(value))。
+*/
