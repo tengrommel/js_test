@@ -37,5 +37,38 @@ const isCitizen_ramda = R.either(wasBornInCountry, wasNaturalized)
 const isEligibleToVote_ramda = R.both(isOver18, isCitizen)
 
 /*
-Ramda 还提供了 allPass 和 anyPass，接受由任意多个函数组成的数组作为参数。如名称所示，allPass 类似于 both，而 anyPass 类似于 either。
+Ramda 还提供了 allPass 和 anyPass，接受由任意多个函数组成的数组作为参数。
+如名称所示，allPass 类似于 both，而 anyPass 类似于 either。
 */
+
+// Pipelines(管道)
+/*
+有时我们需要以 pipeline 的方式将多个函数依次作用于某些数据。
+例如，接受两个数字，将它们相乘，加 1 ，然后平方
+*/
+
+const multiply = (a, b) => a * b
+const addOne = x => x + 1
+const square = x => x * x
+
+const operate = (x, y) => {
+    const product = multiply(x, y)
+    const incremented = addOne(product)
+    const squared = square(incremented)
+    return squared
+}
+
+result = operate(3, 4)
+console.log(result)
+
+// pipe
+
+/*
+Ramda 提供了 pipe 函数：接受一系列函数，并返回一个新函数。
+新函数的元数与第一个传入函数的元数相同（元数：接受参数的个数），然后顺次通过 "管道" 中的函数对输入参数进行处理。
+它将第一个函数作用于参数，返回结果作为下一个函数的入参，依次进行下去。
+"管道" 中最后一个函数的结果作为 pipe 调用的最终结果
+*/
+const operate_ramda = R.pipe(multiply, addOne, square)
+result_ramda = operate_ramda(3, 4)
+console.log(result_ramda)
