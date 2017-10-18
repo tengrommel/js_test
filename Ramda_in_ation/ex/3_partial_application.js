@@ -92,8 +92,47 @@ const titlesForYear_partial_right = (books, year) => {
  对这方面后续会有更多讨论，但现在我们需要将 publishedInYear 的参数翻转一下，以便让参数 year 在最前面。
  */
 
-const publishedInYear_curry = curry((book, year) => book.year === year)
+const publishedInYear_curry = R.curry((book, year) => book.year === year)
 const titlesForYear_curry = (books, year) => {
     const selected = R.filter(publishedInYear_curry(year), books)
-    return map(book => book.title, selected)
+    return R.map(book => book.title, selected)
 }
+
+// 参数的顺序
+
+/*
+注意，为了让curry工作，我们不得不对参数的顺序进行翻转。
+这在函数式编程中非常常见，所以几乎所有的Ramda函数都将待处理的数据放到参数列表的最后面。
+
+你可以将先期传入的参数看作对操作的配置。
+所以，对于 publishedInYear，参数 year 作为配置（需要查找的年份），而参数 book 作为被处理的数据（被查找的对象）。
+*/
+
+// 顺序错误的参数
+/*
+Ramda
+*/
+
+// filp
+
+/*
+第一个选择是 flip。
+flip 接受一个多元函数（元数 >= 2），返回一个元数相同的新函数，但前 2 个参数的顺序调换了。
+它主要用于二元函数，但也可以用于一般函数。
+
+使用flip,我们可以恢复publishedInYear参数的初始的顺序
+*/
+const publishedInYear_filp = R.curry((book, year) => book.year === year)
+const titlesForYear_filp = (books, year) => {
+    const selected = R.filter(flip(publishedInYear_filp)(year), books)
+    return R.map(book => book.title, selected)
+}
+
+// placeholder（占位符）
+
+/*
+更通用的选择是使用 "placeholder" 参数（__）
+假设有一个三元柯里化的函数，并且我们想传入第一个和最后一个参数，中间参数后续再传，应该怎么办呢？我们可以使用 "占位符" 作为中间参数：
+*/
+const threeArgs = R.curry((a,b,c)=>{})
+const middleArgumentLater = threeArgs('value for a', R._, 'value for c')
