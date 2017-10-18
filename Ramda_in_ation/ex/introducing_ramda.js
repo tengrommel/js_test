@@ -68,3 +68,20 @@ filter 将断言函数（本例中为 isEven）作用于数组中的每个元素
 //每当断言函数返回 "真值" 时，相应的元素将包含到结果中；
 //反之当断言函数返回为 "falsy" 值时，相应的元素将从结果数组中排除掉（过滤掉）。
 console.log(R.reject(isEven, [1, 2, 3, 4]));
+
+// find 
+
+/*
+find 将断言函数作用于数组中的每个元素，并返回第一个使断言函数返回真值的元素。
+*/
+console.log(R.find(isEven, [1, 2, 3, 4]));
+
+// reduce
+
+/*
+reduce 接受一个二元函数(reducing function)、一个初始值和待处理的数组。
+归约函数的第一个参数称为 "accumulator" (累加值)，第二个参数取自数组中的元素；
+返回值为一个新的 "accumulator"。
+*/
+const add = (accum, value) => accum + value;
+console.log(R.reduce(add, 5, [1, 2, 3, 4]));
