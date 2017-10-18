@@ -143,3 +143,20 @@ const titlesForYear_ = (books, year) => {
     const selected = R.filter(publishedInYear_(_, year), books)
     return R.map(book => book.title, selected)
 }
+
+// 来做一条管道
+// 现在看看能否将我们的 filter 和 map 调用放入 "pipeline" (管道)中？下面是代码当前的状态，使用了方便的参数顺序的 publishedInYear：
+const publishedInYear_pipe = R.curry((year, book)=> book.year === year)
+const titlesForYear_pipe = (book, year) => {
+    const selected = R.filter(publishedInYear_pipe(year), books)
+    return R.map(book=>book.title, selected)
+}
+
+// 编写pipe
+const publishedInYear_end = curry((year, book) => book.year === year)
+
+const titlesForYear_end = (books, year) => 
+    R.pipe(
+        filter(publishedInYear_end(year)),
+        R.map(book=>book.title)
+    )(books)
