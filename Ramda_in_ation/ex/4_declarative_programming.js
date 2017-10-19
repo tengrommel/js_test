@@ -67,3 +67,49 @@ const wasNaturalized_R = person => R.Boolean(person.naturalizationDate)
 const isOver18_R = person => R.gte(person.age, 18)
 const isCitizen_R = R.either(wasBornInCountry_R, wasNaturalized_R)
 const isEligibleToVote_R = R.both(isOver18_R, isCitizen_R)
+
+// Ramda 还提供了其他比较运算符的替代：gt 对应 >，lt 对应 <，lte 对应 <=。
+/*
+注意，这些函数保持正常的参数顺序（gt 表示第一个参数是否大于第二个参数）。
+这在单独使用时没有问题，但在组合函数时，可能会让人产生困惑。
+这些函数似乎违反了 Ramda 的 "待处理数据放在最后" 的原则，所以我们在 pipeline 或类似的情况下使用它们时，要格外小心。
+这时，flip 和 占位符 (__) 就派上了用场。
+除了 equals，还有一个 identical，可以用来判断两个值是否引用了同一块内存。
+=== 还有一些其他的用途：可以检测字符串或数组是否为空（str === '' 或 arr.length === 0），也可以检查变量是否为 null 或 undefined。
+Ramda 为这两种情况提供了方便的判断函数：isEmpty 和 isNil。
+*/
+
+// Logic(逻辑)
+const lineWidth = settings.lineWidth || 80
+    // defaultTo 检查第二个参数是否为空（isNil）。如果非空，则返回该值；否则返回第一个值。
+const lineWidth_ramda = R.defaultTo(80, settings.lineWidth)
+
+// Conditionals (条件)
+/*
+控制流在函数式编程中不是必要的，但偶尔也会有些用处。
+*/
+// ifElse
+const forever21 = age => age >= 21 ? 21 : age + 1
+    // Ramda的ifElse函数 if...then...else或?:的函数
+const forever21_ramda = age => R.ifElse(R.gte(_, 21), () => 21, inc)(age)
+const forever21_lte_ramda = age => R.ifElse(R.lte(21), () => 21, inc)(age)
+
+// constants (常量)
+// 常量函数在这种情形下非常有用。
+const forever = age => R.ifElse(R.gte(_, 21), R.always(21), inc)(age)
+
+// identity(恒等)
+// 再来写一个函数：alwaysDrivingAge。
+// 该函数接受一个年龄，如果 gte 16，则将该年龄返回；
+// 但如果小于 16，则返回 16。这样任何人都可以伪造他们的驾驶年龄了，即使他们还没有达到。
+const alwaysDrivingAge = age => R.ifElse(R.lt(__, 16), R.always(16), R.identity)(age)
+    // when 和 unless
+const alwaysDrivingAge_R = age => R.when(R.lt(__, 16), R.always(16))(age)
+const alwaysDrivingAge = age => R.unless(R.gte(__, 16), R.always(16))(age)
+    // cond
+    // Ramda 还提供了 cond 函数，来代替 switch 语句或链式的 if...then...else 语句。
+const water = temperature => R.cond([
+    [equals(0), R.always('water freezes at 0C')]
+    [equals(100), always('water boils at 100°C')],
+    [T, temp => `nothing special happens at ${temp}°C`]
+])(temperature)
