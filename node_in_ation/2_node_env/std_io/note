@@ -1,0 +1,2 @@
+从Node程序导出或导入数据
+    使用process.stdout与process.stdin
