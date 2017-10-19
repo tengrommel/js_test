@@ -1,0 +1,15 @@
+{
+  "name": "ramda_cookbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get_method_name.js",
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
