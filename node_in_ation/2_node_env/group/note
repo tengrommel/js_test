@@ -5,5 +5,4 @@ Node可以将目录作为模块，可以把相关模块按相关逻辑组合起�
 
 Node还提供了一个替代方案来实现这个模式。
     在目录下添加一个package.json文件应该包含一个main属性来指向一个javascript文件。
-
     {"name": "group", "main": "./index.js"}
