@@ -1,0 +1,3 @@
+EventEmitter
+Node的事件模块目前只包含一个类：EventEmitter。
+这个类在Node的内置模块以及第三方模块中被大量使用。
