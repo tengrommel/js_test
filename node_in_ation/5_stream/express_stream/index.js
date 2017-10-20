@@ -19,7 +19,7 @@ StatStream.prototype._read = function(size) {
         this.push('n')
         this.limit--
     }
-}；
+}
 
 app.get('/', function(req, res) {
     var statStream = new StatStream(10)
