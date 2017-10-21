@@ -1,5 +1,6 @@
 const devConifg = {
   MONGO_URL: 'mongodb://localhost/makeanodejsapi-dev',
+  JWT_SECRET: 'thisisaserct'
 }
 
 const testConfig = {
