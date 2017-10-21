@@ -1,0 +1,21 @@
+EventLoop&EventEmitter
+
+Is Node.js Single Thread?
+
+Concurrency
+
+Blocking and Non-Blocking I/O
+
+Simplified concepts of
+    Blocking I/O
+    Non-blocking I/O
+
+I/O multiplexing
+    Reactor
+    select() or poll()
+    Event notification, synchronous event demux
+
+libuv
+    Node.js Luvit ...
+    multi-platform support library with a focus on asynchronous I/O
+    
