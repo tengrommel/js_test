@@ -15,6 +15,16 @@ app.get('/test/:id', (req, res)=>{
     })
 })
 
+app.get('/batch/:id', (req, res)=>{
+    let id = req.params.id || 1
+    console.log(`request item# ${id}`)
+
+    service.getResultBatch(id, (result)=>{
+        res.writeHead(200)
+        res.end(JSON.stringify(result))
+    })
+})
+
 app.get('*', (req, res)=>{
     res.end('hello')
 })

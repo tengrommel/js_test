@@ -14,8 +14,6 @@ const getDataMock= (id, cb)=> {
     }, 200)
 }
 
-
-
 /**
  * Service Layer
  * @param {*} id
@@ -34,20 +32,33 @@ const getDataMock= (id, cb)=> {
         delete queue[id]
     })
 }
-
  * 
  */
-const getResult = (id, cb)=> {
-    if(queue[id]) return queue[id].push(cb)
-    queue[id] = [cb]
-    getDataMock(id, (err, result)=>{
-        queue[id].forEach((cb) => {
-            cb(err, result)
+
+const getDataPromiseMock = (id)=>{
+    return new Promise((resolve, reject)=>{
+        getDataMock(id, (err, result)=>{
+            resolve(result)
         })
-        delete queue[id]
+    })
+}
+
+const getResult = (id, cb)=> {
+    getDataMock(id, cb)
+}
+
+let cache = {}
+const getResultBatch = (id, cb)=>{
+    if(cache[id]) return cache[id].then(cb)
+    cache[id] = getDataPromiseMock(id);
+    cache[id].then(cb).then(()=>{
+        setTimeout( ()=>{
+            delete cache[id]
+        }, 2000)
     })
 }
 
 module.exports={
-    getResult
+    getResult,
+    getResultBatch
 }
