@@ -13,7 +13,7 @@ app.use(async(ctx, next) => {
     console.log(2)
     ctx.hello += 10
     if (ctx.hello > 5){
-        let error = new Error()
+        let error = new Error('1234')
         error.status = 401
         throw error
     }else{
