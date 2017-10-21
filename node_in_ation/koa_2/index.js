@@ -26,6 +26,10 @@ app.use((ctx) => {
     ctx.body = ctx.hello
 })
 
+app.on('error', (err, ctx) => {
+    ctx.throw(err, message || 'Unknow', err.status || 500)
+})
+
 const server = app.listen(port)
 
 server.on('listening', () => console.log('server is start on', port))
