@@ -4,12 +4,16 @@ const port = process.env.port || 3000
 
 app.use(async(ctx, next) => {
     ctx.hello = 0
+    console.log(1)
     await next()
+    console.log(11)
 })
 
 app.use(async(ctx, next) => {
-    ctx.hello += 1    
+    console.log(2)
+    ctx.hello += 10
     await next()
+    console.log(22)
 })
 
 app.use((ctx) => {
