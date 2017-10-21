@@ -14,7 +14,6 @@ stream.end = function (buffer) {
     stream.emit("finish")
     console.log(bytes + " bytes written")
 }
-
 stream.pipe(stream)
 stream.emit("data", new Buffer("foo"))
 stream.emit("end")
