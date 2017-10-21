@@ -13,9 +13,7 @@ app.use(async(ctx, next) => {
     console.log(2)
     ctx.hello += 10
     if (ctx.hello > 5){
-        let error = new Error('1234')
-        error.status = 401
-        throw error
+        ctx.throw('aaa', 401)       
     }else{
        await next()
     }
@@ -26,9 +24,6 @@ app.use((ctx) => {
     ctx.body = ctx.hello
 })
 
-app.on('error', (err, ctx) => {
-    ctx.throw(err, message || 'Unknow', err.status || 500)
-})
 
 const server = app.listen(port)
 
