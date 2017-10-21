@@ -1,7 +1,10 @@
 const Router = require('koa-router')
 const router = new Router()
 
-const api = require('./api')
-router.use('/node/api', api.routes(), api.allowedMethods())
+router.post('/login', (ctx) => {
+    ctx.body = {
+        token: '123456'
+    }
+})
 
 module.exports = router
