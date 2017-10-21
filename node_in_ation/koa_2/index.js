@@ -8,6 +8,7 @@ app.use(logger())
 app.use(bodyparser())
 
 app.use(async(ctx, next) => {
+    console.log(ctx.request.body)
     ctx.body = 'hello world'
 })
 
