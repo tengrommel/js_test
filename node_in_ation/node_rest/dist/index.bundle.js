@@ -786,7 +786,7 @@ async function getPostsList(req, res) {
 
     const posts = promise[1].reduce((arr, post) => {
       const favorite = promise[0]._favorites.isPostIsFavorite(post._id);
-      arr.push(Object.assign({}, post, {
+      arr.push(Object.assign({}, post.toJSON(), {
         favorite
       }));
       return arr;

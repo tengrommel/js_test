@@ -41,7 +41,7 @@ export async function getPostsList(req, res) {
     const posts = promise[1].reduce((arr, post) => {
       const favorite = promise[0]._favorites.isPostIsFavorite(post._id)
       arr.push({
-        ...post,
+        ...post.toJSON(),
         favorite
       })
       return arr
