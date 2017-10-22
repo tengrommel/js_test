@@ -728,7 +728,7 @@ async function getPostById(req, res) {
     const post = await _post2.default.findById(req.params.id).populate('user');
     return res.status(_httpStatus2.default.OK).json(post);
   } catch (e) {
-    return res.status(_httpStatus2.default.BAD_REQUEST);
+    return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
   }
 }
 
