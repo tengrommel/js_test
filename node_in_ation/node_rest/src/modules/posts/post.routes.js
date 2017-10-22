@@ -11,5 +11,6 @@ routes.post('/', authJwt, validate(postValidation.createPost), postController.cr
 
 routes.get('/:id', postController.getPostById)
 routes.get('/', postController.getPostsList)
+routes.patch('/:id', authJwt, validate(postValidation.updatePost), postController.updatePost)
 
 export default routes
