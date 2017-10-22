@@ -19,3 +19,11 @@ export async function getPostById(req, res) {
   }
 }
 
+export async function getPostsList(req, res) {
+  try {
+    const posts = await Post.find().populate('user')
+    return res.status(HTTPStatus.OK).json(posts)
+  } catch (e) {
+    return res.status(HTTPStatus.BAD_REQUEST).json(e)
+  }
+}

@@ -688,6 +688,7 @@ const routes = new _express.Router();
 routes.post('/', _auth.authJwt, (0, _expressValidation2.default)(_post3.default.createPost), postController.createPost);
 
 routes.get('/:id', postController.getPostById);
+routes.get('/', postController.getPostsList);
 
 exports.default = routes;
 
@@ -703,6 +704,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createPost = createPost;
 exports.getPostById = getPostById;
+exports.getPostsList = getPostsList;
 
 var _httpStatus = __webpack_require__(30);
 
@@ -727,6 +729,15 @@ async function getPostById(req, res) {
   try {
     const post = await _post2.default.findById(req.params.id).populate('user');
     return res.status(_httpStatus2.default.OK).json(post);
+  } catch (e) {
+    return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
+  }
+}
+
+async function getPostsList(req, res) {
+  try {
+    const posts = await _post2.default.find().populate('user');
+    return res.status(_httpStatus2.default.OK).json(posts);
   } catch (e) {
     return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
   }
