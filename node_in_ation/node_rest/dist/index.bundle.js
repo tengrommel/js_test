@@ -735,8 +735,10 @@ async function getPostById(req, res) {
 }
 
 async function getPostsList(req, res) {
+  const limit = parseInt(req.query.limit, 0);
+  const skip = parseInt(req.query.skip, 0);
   try {
-    const posts = await _post2.default.find().populate('user');
+    const posts = await _post2.default.list({ limit: limit, skip: skip });
     return res.status(_httpStatus2.default.OK).json(posts);
   } catch (e) {
     return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
@@ -827,6 +829,9 @@ PostSchema.statics = {
     return this.create(Object.assign({}, args, {
       user
     }));
+  },
+  list({ skip = 0, limit = 1 } = {}) {
+    return this.find().sort({ createdAt: -1 }).skip(skip).limit(limit).populate('user');
   }
 };
 
