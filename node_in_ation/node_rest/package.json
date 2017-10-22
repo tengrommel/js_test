@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev:build": "yarn run clean && webpack -w",
-    "dev": "NODE_ENV=development nodemon dist/index.bundle.js"
+    "dev": "NODE_ENV=development nodemon dist/index.bundle.js",
+    "prettier": "prettier --signle-quote --print-with 80 --trailing-comma all --write 'src/**/*.js'"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +36,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "morgan": "^1.9.0",
+    "prettier": "^1.7.4",
     "rimraf": "^2.6.2",
     "webpack": "^3.8.1",
     "webpack-node-externals": "^1.6.0"
