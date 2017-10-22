@@ -107,6 +107,13 @@ UserSchema.methods = {
         await Post.incFavoriteCount(postId)
       }
       return this.save()
+    },
+
+    isPostIsFavorite(postId) {
+      if (this.favorites.posts.indexOf(postId) >= 0) {
+        return true
+      }
+      return false
     }
   }
 }

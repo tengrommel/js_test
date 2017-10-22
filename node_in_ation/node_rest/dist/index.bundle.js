@@ -332,6 +332,13 @@ UserSchema.methods = {
         await _post2.default.incFavoriteCount(postId);
       }
       return this.save();
+    },
+
+    isPostIsFavorite(postId) {
+      if (this.favorites.posts.indexOf(postId) >= 0) {
+        return true;
+      }
+      return false;
     }
   }
 };
@@ -759,8 +766,13 @@ async function createPost(req, res) {
 
 async function getPostById(req, res) {
   try {
-    const post = await _post2.default.findById(req.params.id).populate('user');
-    return res.status(_httpStatus2.default.OK).json(post);
+    const promise = await Promise.all([_user2.default.findById(req.user._id), _post2.default.findById(req.params.id).populate('user')]);
+
+    const favorite = promise[0]._favorites.isPostIsFavorite(req.params.id);
+    const post = promise[1];
+    return res.status(_httpStatus2.default.OK).json(Object.assign({}, post.toJSON(), {
+      favorite
+    }));
   } catch (e) {
     return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
   }
@@ -770,7 +782,16 @@ async function getPostsList(req, res) {
   const limit = parseInt(req.query.limit, 0);
   const skip = parseInt(req.query.skip, 0);
   try {
-    const posts = await _post2.default.list({ limit: limit, skip: skip });
+    const promise = await Promise.all([_user2.default.findById(req.user._id), _post2.default.list({ limit, skip })]);
+
+    const posts = promise[1].reduce((arr, post) => {
+      const favorite = promise[0]._favorites.isPostIsFavorite(post._id);
+      arr.push(Object.assign({}, post, {
+        favorite
+      }));
+      return arr;
+    }, []);
+
     return res.status(_httpStatus2.default.OK).json(posts);
   } catch (e) {
     return res.status(_httpStatus2.default.BAD_REQUEST).json(e);
