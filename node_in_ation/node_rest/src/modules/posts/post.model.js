@@ -1,4 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
+import slug from 'slug'
+import uniqueValidator from 'mongoose-unique-validator'
 
 const PostSchema = new Schema({
   title: {
@@ -22,7 +24,35 @@ const PostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-  }
+  },
+  favoriteCount: {
+    type: Number,
+    default: 0,
+  }, 
+}, { timestamps: true });
+
+PostSchema.plugin(uniqueValidator, {
+  message: '{VALUE} already taken!'
 })
+
+PostSchema.pre('validate', function (next) {
+  this._slugify()
+  next()
+})
+
+PostSchema.methods = {
+  _slugify() {
+    this.slug = slug(this.title)
+  }
+}
+
+PostSchema.statics = {
+  createPost(args, user) {
+    return this.create({
+      ...args,
+      user,
+    })
+  }
+}
 
 export default mongoose.model('Post', PostSchema)
