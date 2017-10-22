@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import { passwordReg } from './user.validations'
 import constants from '../../config/constants'
 import uniqueValidator from 'mongoose-unique-validator'
+import Post from '../posts/post.model'
 
 const UserSchema = new Schema({
   email: {
@@ -47,7 +48,15 @@ const UserSchema = new Schema({
       message: '{VALUE} is not a valid password!'
     },
   },
-});
+  favorites: {
+      posts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+      }]
+    }
+  }, 
+  {timestamps: true},
+);
 
 UserSchema.plugin(uniqueValidator, {
   message: '{VALUE} already taken!'
@@ -86,6 +95,18 @@ UserSchema.methods = {
     return {
       _id: this._id,
       userName: this.userName,
+    }
+  },
+  _favorites: {
+    async posts(postId) {
+      if (this._favorites.posts.indexOf(postId) >= 0) {
+        this.favorites.posts.remove(postId)
+        await Post.decFavoriteCount(postId)
+      } else {
+        this.favorites.posts.push(postId)
+        await Post.incFavoriteCount(postId)
+      }
+      return this.save()
     }
   }
 }
