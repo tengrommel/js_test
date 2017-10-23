@@ -2,7 +2,7 @@ const express = require('express')
 const socket = require('socket.io')
 
 const app = express()
-var server = app.listen(4000, function () {
+const server = app.listen(4000, ()=>{
   console.log('listening to request on ports 4000')
 })
 
@@ -10,8 +10,8 @@ var server = app.listen(4000, function () {
 app.use(express.static('public'))
 
 // Socket setup
-var io = socket(server)
+const io = socket(server)
 
-io.on('connection', function(socket){
-  console.log('made socket connection')
+io.on('connection', (socket)=>{
+  console.log('made socket connection', socket.id)
 })
