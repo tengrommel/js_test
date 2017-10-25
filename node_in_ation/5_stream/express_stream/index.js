@@ -1,15 +1,18 @@
-var stream = require('stream')
+var stream = require('stream') // 流
 var util = require('util')
 var express = require('express')
 var app = express()
 
+// 继承
 util.inherits(StatStream, stream.Readable)
 
+// 将方法注入 子类
 function StatStream(limit) {
     stream.Readable.call(this)
     this.limit = limit
 }
 
+// 重写函数
 StatStream.prototype._read = function(size) {
     if (this.limit == 0) {
         // Done
