@@ -17,7 +17,8 @@ btn.addEventListener('click', () => {
     });
 });
 
-message.addEventListener('keypress', () => {
+message.addEventListener('keydown', () => {
+    console.log('中文是否在此执行 否')
     socket.emit('typing', handle.value);
 })
 
@@ -28,6 +29,5 @@ socket.on('chat', (data) => {
 })
 
 socket.on('typing', (data) => {
-    console.log(data)
     feedback.innerHTML = '<p><em>' + data + ' is typing a message...</em></p>'
 })
