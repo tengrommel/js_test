@@ -18,3 +18,7 @@ console.log(__dirname)
 console.log(__filename)
 
 // require exports
+counter = require('./count')
+let adder = function (a, b) {
+  return `The sum of the 2 number is ${a+b}`
+}

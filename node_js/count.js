@@ -3,3 +3,5 @@ let counter = function(arr) {
 }
 
 console.log(counter(['shaun', 'crystal', 'ryu']))
+
+module.exports = counter
