@@ -5,7 +5,7 @@ amqp.connect("amqp://localhost", function(err, conn) {
   if(err) return 
   conn.createChannel(function (err, ch) {
     const q = "hello"
-    ch.prefetch(2)
+    ch.prefetch(2) // 一次可以领到几个任务
 
     ch.assertQueue(q, {durable: false})
     
