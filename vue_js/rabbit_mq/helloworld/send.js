@@ -6,11 +6,8 @@ amqp.connect("amqp://localhost", function(err, conn) {
   conn.createChannel(function (err, ch) {
     const q = "hello"
     ch.prefetch(2) // 一次可以领到几个任务
-
     ch.assertQueue(q, {durable: false})
-    
     sch.sendToQueue(q, new Buffer('{"hello": "world"}'))
-   // ch.publish((exchange=""), (routing_key="hello"), (body="message"))
 
     setTimeout(function () {
       conn.close()
