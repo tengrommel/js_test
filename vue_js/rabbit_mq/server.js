@@ -9,7 +9,8 @@ amqp.connect("amqp://localhost", function(err, conn) {
     ch.consume(
       q, 
       function(msg) {
-        console.log(" [x] Received %s", msg.content.toString(), moment())
+        console.log(JSON.parse(msg.content.toString()))
+        // console.log(" [x] Received %s", msg.content.toString(), moment())
       },
       { noAck: true }
     )
